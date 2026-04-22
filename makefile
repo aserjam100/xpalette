@@ -1,13 +1,16 @@
 # Compiler and flags
 CC := clang
-CFLAGS := -Wall -Wextra -std=c11 -g
-CFLAGS += $(shell pkg-config --cflags raylib)
-LDFLAGS := $(shell pkg-config --libs raylib)
 
 # Directories
 SRC_DIR := src
 BUILD_DIR := build
 BIN_DIR := bin
+
+CFLAGS := -Wall -Wextra -std=c11 -g
+CFLAGS += $(shell pkg-config --cflags raylib)
+CFLAGS += -I$(SRC_DIR)/vendor
+LDFLAGS := $(shell pkg-config --libs raylib)
+
 
 # Files
 SOURCES := $(wildcard $(SRC_DIR)/*.c)
@@ -20,6 +23,10 @@ all: $(TARGET) compile_commands.json
 # Link the final binary
 $(TARGET): $(OBJECTS) | $(BIN_DIR)
 	$(CC) $(OBJECTS) -o $@ $(LDFLAGS)
+
+# Vendor files: suppress warnings we don't control
+$(BUILD_DIR)/raygui_impl.o: $(SRC_DIR)/raygui_impl.c | $(BUILD_DIR)
+	$(CC) $(CFLAGS) -Wno-unused-parameter -c $< -o $@
 
 # Compile each .c file into a .o file
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)

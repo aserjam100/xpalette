@@ -1,4 +1,5 @@
 #include <raylib.h>
+#include "raygui.h"
 
 int main(void){
   const int width = 800;
@@ -13,6 +14,10 @@ int main(void){
     BeginDrawing();
     ClearBackground(RAYWHITE);
     DrawText("Hello World!", 10, 10, 40, DARKGRAY);
+    if(GuiButton((Rectangle){10,60,120,30}, "Click Me")){
+      // This block runs on the frame the button was clicked
+      TraceLog(LOG_INFO, "Button Clicked!");
+    }
     EndDrawing();
   }
 
