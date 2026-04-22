@@ -1,0 +1,27 @@
+# Compiled binaries
+main
+xpalette
+*.out
+*.o
+*.obj
+*.a
+*.dylib
+*.so
+
+# Build directories
+build/
+bin/
+
+# macOS
+.DS_Store
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# LSP / tooling
+compile_commands.json
+.cache/
